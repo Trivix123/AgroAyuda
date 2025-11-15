@@ -46,8 +46,9 @@ export function AppSidebar() {
         <SidebarMenu>
           {navItems.map(item => (
             <SidebarMenuItem key={item.label}>
-              <Link href={item.href} passHref legacyBehavior>
+              <Link href={item.href} passHref>
                 <SidebarMenuButton
+                  asChild
                   isActive={
                     item.href === '/dashboard'
                       ? pathname === item.href
@@ -55,8 +56,10 @@ export function AppSidebar() {
                   }
                   tooltip={item.label}
                 >
-                  <item.icon />
-                  <span>{item.label}</span>
+                  <span>
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </span>
                 </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
@@ -72,20 +75,24 @@ export function AppSidebar() {
             }
             return (
               <SidebarMenuItem key={item.label}>
-                <Link href={item.href} passHref legacyBehavior>
-                  <SidebarMenuButton isActive={pathname.startsWith(item.href)} tooltip={item.label}>
-                    <item.icon />
-                    <span>{item.label}</span>
+                <Link href={item.href} passHref>
+                  <SidebarMenuButton asChild isActive={pathname.startsWith(item.href)} tooltip={item.label}>
+                    <span>
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
             );
           })}
           <SidebarMenuItem>
-            <Link href="/login" passHref legacyBehavior>
-              <SidebarMenuButton tooltip="Cerrar Sesión">
-                <LogOut />
-                <span>Cerrar Sesión</span>
+            <Link href="/login" passHref>
+              <SidebarMenuButton asChild tooltip="Cerrar Sesión">
+                <span>
+                  <LogOut />
+                  <span>Cerrar Sesión</span>
+                </span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>
