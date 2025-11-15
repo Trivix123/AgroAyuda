@@ -15,6 +15,8 @@ export type Crop = {
   image: string;
   description: string;
   plantingSeason: string;
+  optimalPlantingMonths: number[]; // 0 = Enero, 1 = Febrero, etc.
+  daysToHarvest: number;
   recommendations: {
     soil: string;
     light: string;
@@ -39,6 +41,8 @@ export const crops: Crop[] = [
     description:
       'El café es uno de los cultivos más importantes de El Salvador, conocido por su alta calidad y sabor distintivo. Requiere condiciones específicas de altitud y clima para prosperar.',
     plantingSeason: 'La siembra se realiza generalmente al inicio de la estación lluviosa, entre mayo y junio.',
+    optimalPlantingMonths: [4, 5], // Mayo, Junio
+    daysToHarvest: 270,
     recommendations: {
       soil: 'Suelos francos, profundos, ricos en materia orgánica y con buen drenaje. pH ideal entre 5.5 y 6.5.',
       light: 'Prefiere sombra parcial, especialmente en sus primeras etapas. Se cultiva tradicionalmente bajo árboles de sombra.',
@@ -69,6 +73,8 @@ export const crops: Crop[] = [
     description:
       'La caña de azúcar es un cultivo fundamental para la producción de azúcar y etanol. Es una planta robusta que se adapta bien a las zonas cálidas y bajas del país.',
     plantingSeason: 'Puede sembrarse durante gran parte del año, pero es común hacerlo entre noviembre y enero para aprovechar la humedad residual.',
+    optimalPlantingMonths: [10, 11, 0], // Noviembre, Diciembre, Enero
+    daysToHarvest: 365,
     recommendations: {
       soil: 'Suelos pesados con buena retención de humedad, como los franco-arcillosos. Tolera un rango amplio de pH.',
       light: 'Requiere exposición a pleno sol para maximizar la producción de azúcares.',
@@ -99,6 +105,8 @@ export const crops: Crop[] = [
     description:
       'El maíz es la base de la alimentación en El Salvador y un cultivo de gran importancia cultural y económica. Se cultiva en todo el país en diferentes épocas.',
     plantingSeason: 'Siembra de "primera" en mayo-junio y siembra de "postrera" en agosto-septiembre.',
+    optimalPlantingMonths: [4, 5, 7, 8], // Mayo, Junio, Agosto, Septiembre
+    daysToHarvest: 90,
     recommendations: {
       soil: 'Suelos bien drenados, fértiles y ricos en materia orgánica. pH entre 6.0 y 7.0.',
       light: 'Necesita pleno sol para un desarrollo óptimo y una buena polinización.',
@@ -129,6 +137,8 @@ export const crops: Crop[] = [
     description:
       'El frijol es una fuente esencial de proteína en la dieta salvadoreña. Es un cultivo de ciclo corto que fija nitrógeno en el suelo, mejorando su fertilidad.',
     plantingSeason: 'Generalmente se siembra en asociación con el maíz en las siembras de primera y postrera.',
+    optimalPlantingMonths: [4, 5, 7, 8], // Mayo, Junio, Agosto, Septiembre
+    daysToHarvest: 75,
     recommendations: {
       soil: 'Prefiere suelos ligeros y bien drenados. No tolera el exceso de humedad.',
       light: 'Requiere buena exposición solar, aunque tolera algo de sombra en sistemas de asocio.',
@@ -155,6 +165,8 @@ export const crops: Crop[] = [
     description:
       'El tomate es una hortaliza muy popular, cultivada tanto por productores agrícolas como en huertos urbanos. Requiere cuidados constantes para una buena cosecha.',
     plantingSeason: 'Se puede cultivar todo el año en condiciones controladas (invernadero) o en la época seca (noviembre-abril) al aire libre.',
+    optimalPlantingMonths: [0, 1, 2, 3, 10, 11], // Ene, Feb, Mar, Abr, Nov, Dic
+    daysToHarvest: 90,
     recommendations: {
       soil: 'Suelos sueltos, profundos y ricos en materia orgánica, con excelente drenaje. pH ideal de 6.0-6.8.',
       light: 'Necesita al menos 6-8 horas de sol directo al día.',
@@ -185,6 +197,8 @@ export const crops: Crop[] = [
     description:
       'El ayote (calabaza) es una planta rastrera o trepadora muy productiva. Sus frutos, flores y guías son comestibles. Es un cultivo tradicional en la milpa.',
     plantingSeason: 'Se siembra comúnmente en la época lluviosa (mayo-agosto).',
+    optimalPlantingMonths: [4, 5, 6, 7], // Mayo, Junio, Julio, Agosto
+    daysToHarvest: 80,
     recommendations: {
       soil: 'Suelos fértiles y bien drenados. Crece bien en los bordes de la milpa o en montículos de compost.',
       light: 'Requiere pleno sol para un buen desarrollo de frutos.',
@@ -215,6 +229,8 @@ export const crops: Crop[] = [
     description:
       'El pepino es una hortaliza refrescante de crecimiento rápido. Se adapta bien al cultivo en espalderas o tutores, lo que lo hace ideal para huertos urbanos y productores.',
     plantingSeason: 'Mejor en la época seca con riego (noviembre-abril) para evitar enfermedades fúngicas.',
+    optimalPlantingMonths: [0, 1, 2, 3, 10, 11], // Ene, Feb, Mar, Abr, Nov, Dic
+    daysToHarvest: 60,
     recommendations: {
       soil: 'Suelos ricos en materia orgánica, sueltos y con buen drenaje.',
       light: 'Necesita pleno sol.',
@@ -240,6 +256,8 @@ export const crops: Crop[] = [
     description:
       'La berenjena es una hortaliza de clima cálido que produce frutos de un característico color morado. Es versátil en la cocina y nutritiva.',
     plantingSeason: 'Ideal para la época seca con riego, ya que es sensible a la alta humedad ambiental.',
+    optimalPlantingMonths: [0, 1, 2, 3, 10, 11], // Ene, Feb, Mar, Abr, Nov, Dic
+    daysToHarvest: 80,
     recommendations: {
       soil: 'Suelos profundos, fértiles y bien drenados. pH ligeramente ácido a neutro.',
       light: 'Requiere muchas horas de sol directo para una buena producción.',

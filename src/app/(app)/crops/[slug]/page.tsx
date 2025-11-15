@@ -1,19 +1,26 @@
+
+'use client';
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { crops } from '@/lib/data';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { AppHeader } from '@/components/app-header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Calendar, Sun, Droplets, FlaskConical, Leaf } from 'lucide-react';
+import { Calendar as CalendarIcon, Sun, Droplets, FlaskConical, Leaf, CalendarDays } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Timeline, TimelineItem, TimelineConnector, TimelineHeader, TimelineTitle, TimelineContent } from '@/components/timeline';
-
+import { Calendar } from '@/components/ui/calendar';
+import { addDays, format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export default function CropDetailPage({ params }: { params: { slug: string } }) {
   const crop = crops.find(c => c.slug === params.slug);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 
   if (!crop) {
     notFound();
@@ -21,6 +28,16 @@ export default function CropDetailPage({ params }: { params: { slug: string } })
 
   const image = placeholderImages.placeholderImages.find(p => p.id === crop.image);
   const Icon = crop.icon;
+
+  const plantingMonths = crop.optimalPlantingMonths;
+  const today = new Date();
+
+  const isPlantingDay = (day: Date) => {
+    return plantingMonths.includes(day.getMonth());
+  };
+
+  const harvestDate = selectedDate ? addDays(selectedDate, crop.daysToHarvest) : undefined;
+
 
   return (
     <>
@@ -57,6 +74,45 @@ export default function CropDetailPage({ params }: { params: { slug: string } })
                 </CardHeader>
                 <CardContent className="pt-6">
                     <p className="text-muted-foreground">{crop.description}</p>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-xl font-headline">
+                        <CalendarDays className="w-5 h-5 text-primary" />
+                        Calendario de Siembra y Cosecha
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center">
+                    <p className="text-muted-foreground text-sm mb-4 text-center">
+                        Selecciona una fecha de siembra óptima (resaltada en verde) para ver la fecha estimada de cosecha.
+                    </p>
+                    <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={setSelectedDate}
+                        fromDate={today}
+                        locale={es}
+                        modifiers={{
+                            planting: isPlantingDay,
+                            harvest: harvestDate ? [harvestDate] : [],
+                        }}
+                        modifiersClassNames={{
+                            planting: 'bg-primary/10 text-primary-foreground',
+                            harvest: 'bg-accent text-accent-foreground',
+                        }}
+                    />
+                    {harvestDate && selectedDate && (
+                         <div className="mt-4 text-center p-4 bg-muted rounded-lg">
+                            <p className="font-semibold">
+                                Si siembras el <span className="text-primary">{format(selectedDate, "d 'de' MMMM", { locale: es })}</span>,
+                            </p>
+                            <p className="font-semibold">
+                                tu cosecha estimada será el <span className="text-accent">{format(harvestDate, "d 'de' MMMM, yyyy", { locale: es })}</span>.
+                            </p>
+                        </div>
+                    )}
                 </CardContent>
             </Card>
 
@@ -101,7 +157,7 @@ export default function CropDetailPage({ params }: { params: { slug: string } })
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-xl font-headline">
-                        <Calendar className="w-5 h-5 text-primary" />
+                        <CalendarIcon className="w-5 h-5 text-primary" />
                         Época de Siembra
                     </CardTitle>
                 </CardHeader>
