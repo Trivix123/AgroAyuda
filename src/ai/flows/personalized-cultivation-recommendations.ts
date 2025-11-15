@@ -44,10 +44,7 @@ const prompt = ai.definePrompt({
   Planting Date: {{{plantingDate}}}
   User Type: {{{userType}}}
 
-  Format your response as follows:
-
-  Soil Preparation Recommendations: [recommendations for soil preparation]
-  Seeding Recommendations: [recommendations for seeding practices]`,
+  Respond with a valid JSON object that conforms to the output schema.`,
 });
 
 const personalizedCultivationRecommendationsFlow = ai.defineFlow(
