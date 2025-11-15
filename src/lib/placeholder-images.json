@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "auth-background",
+      "description": "A lush green coffee plantation under a clear sky.",
+      "imageUrl": "https://images.unsplash.com/photo-1670758611084-e216510c5433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBwbGFudGF0aW9ufGVufDB8fHx8MTc2MzE2NjM5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee plantation"
+    },
+    {
+      "id": "user-avatar",
+      "description": "A close-up portrait of a smiling farmer.",
+      "imageUrl": "https://images.unsplash.com/photo-1665281875409-805601db83d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmYXJtZXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjMxNjk3MjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farmer portrait"
+    },
+    {
+      "id": "cafe-image",
+      "description": "Close up of ripe coffee beans on a branch.",
+      "imageUrl": "https://images.unsplash.com/photo-1587734195503-904fca47e0e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb2ZmZWUlMjBiZWFuc3xlbnwwfHx8fDE3NjMxMzkyNjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "coffee beans"
+    },
+    {
+      "id": "cana-image",
+      "description": "A dense field of tall sugar cane.",
+      "imageUrl": "https://images.unsplash.com/photo-1586315776885-a176ffccbe01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdWdhciUyMGNhbmV8ZW58MHx8fHwxNzYzMTczMDE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sugar cane"
+    },
+    {
+      "id": "maiz-image",
+      "description": "A vibrant green cornfield.",
+      "imageUrl": "https://images.unsplash.com/photo-1567547921486-f280c2f53b5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjb3JuJTIwZmllbGR8ZW58MHx8fHwxNzYzMTczMDE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "corn field"
+    },
+    {
+      "id": "frijol-image",
+      "description": "A handful of freshly harvested beans.",
+      "imageUrl": "https://images.unsplash.com/photo-1629009111536-a2af08b4a403?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxiZWFucyUyMGhhcnZlc3R8ZW58MHx8fHwxNzYzMTczMDE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beans harvest"
+    },
+    {
+      "id": "tomate-image",
+      "description": "Ripe red tomatoes on the vine.",
+      "imageUrl": "https://images.unsplash.com/photo-1616169776277-224b4158e788?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0b21hdG9lcyUyMHZpbmV8ZW58MHx8fHwxNzYzMDkxNDQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tomatoes vine"
+    },
+    {
+      "id": "ayote-image",
+      "description": "A large squash in a garden patch.",
+      "imageUrl": "https://images.unsplash.com/photo-1719839154119-3475d0be5441?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzcXVhc2glMjBnYXJkZW58ZW58MHx8fHwxNzYzMTczMDE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "squash garden"
+    },
+    {
+      "id": "pepino-image",
+      "description": "Cucumbers growing on a trellis.",
+      "imageUrl": "https://images.unsplash.com/photo-1650166660799-dea1e25d823c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjdWN1bWJlcnMlMjBncm93aW5nfGVufDB8fHx8MTc2MzE3MzAxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cucumbers growing"
+    },
+    {
+      "id": "berenjena-image",
+      "description": "Shiny purple eggplants hanging from a plant.",
+      "imageUrl": "https://images.unsplash.com/photo-1659261200833-ec8761558af7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxlZ2dwbGFudCUyMHBsYW50fGVufDB8fHx8MTc2MzE3MzAxN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "eggplant plant"
+    }
+  ]
 }
