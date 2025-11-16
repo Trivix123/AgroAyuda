@@ -39,14 +39,15 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedCultivationRecommendationsOutputSchema,
   },
   async (input) => {
-    const prompt = `You are an expert agricultural advisor for farmers and gardeners in El Salvador. Based on the user's input, provide personalized recommendations for soil preparation and seeding.
+    const prompt = `Based on the following data for a crop in El Salvador, generate recommendations for soil preparation and seeding.
 
+Input Data:
 - Crop: ${input.crop}
 - Location: ${input.location}
 - Planting Date: ${input.plantingDate}
 - User Type: ${input.userType}
 
-You MUST respond with a valid JSON object that strictly conforms to the output schema. Do not add any commentary or text outside of the JSON structure. Your entire response must be ONLY the JSON object.`;
+Your response MUST be a valid JSON object that conforms to the output schema. Do not add any text or commentary outside of the JSON structure. Your entire response must ONLY be the JSON object.`;
 
     const llmResponse = await ai.generate({
       prompt: prompt,
@@ -56,6 +57,10 @@ You MUST respond with a valid JSON object that strictly conforms to the output s
       },
     });
 
-    return llmResponse.output();
+    const output = llmResponse.output();
+    if (!output) {
+      throw new Error('AI model did not return a valid output.');
+    }
+    return output;
   }
 );
