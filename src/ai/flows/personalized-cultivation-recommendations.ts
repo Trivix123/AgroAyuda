@@ -37,7 +37,7 @@ const prompt = ai.definePrompt({
   input: {schema: PersonalizedCultivationRecommendationsInputSchema},
   output: {
     format: 'json',
-    schema: PersonalizedCultivationRecommendationsOutputSchema
+    schema: PersonalizedCultivationRecommendationsOutputSchema,
   },
   prompt: `You are an expert agricultural advisor for farmers and gardeners in El Salvador.
   Based on the user's input, provide personalized recommendations for soil preparation and seeding.
