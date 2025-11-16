@@ -57,10 +57,10 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
   },
   async (input) => {
     const llmResponse = await prompt(input);
-    
-    // The model can sometimes return a non-JSON string.
-    // This is a workaround to extract the JSON from the string.
     const textResponse = llmResponse.text || '';
+    
+    // Robustly extract JSON from the response text.
+    // This regex finds a JSON object that is either inside ```json ... ``` or is a standalone object.
     const jsonMatch = textResponse.match(/```json\n([\s\S]*?)\n```|({[\s\S]*})/);
 
     if (!jsonMatch) {
@@ -73,7 +73,7 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     
     try {
       const parsedJson = JSON.parse(jsonString);
-      // Validate the parsed JSON against the Zod schema.
+      // Validate the parsed JSON against the Zod schema to ensure it's correct.
       const validationResult = PersonalizedCultivationRecommendationsOutputSchema.safeParse(parsedJson);
       
       if (!validationResult.success) {
