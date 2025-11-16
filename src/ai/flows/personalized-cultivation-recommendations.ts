@@ -54,31 +54,13 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedCultivationRecommendationsOutputSchema,
   },
   async (input) => {
-    let result: PersonalizedCultivationRecommendationsOutput | null = null;
-    let attempts = 0;
-    const maxAttempts = 3;
+    const llmResponse = await prompt(input);
+    const output = llmResponse.output;
 
-    while (!result && attempts < maxAttempts) {
-      attempts++;
-      const llmResponse = await prompt(input);
-      const output = llmResponse.output;
-
-      if (output) {
-        const validation = PersonalizedCultivationRecommendationsOutputSchema.safeParse(output);
-        if (validation.success) {
-          result = validation.data;
-        } else {
-          console.warn(`Attempt ${attempts}: AI response validation failed.`, validation.error);
-        }
-      } else {
-         console.warn(`Attempt ${attempts}: AI response was empty.`);
-      }
+    if (!output) {
+      throw new Error('Failed to generate a valid cultivation plan.');
     }
 
-    if (!result) {
-      throw new Error('Failed to generate a valid cultivation plan after multiple attempts.');
-    }
-
-    return result;
+    return output;
   }
 );
