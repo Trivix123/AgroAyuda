@@ -32,6 +32,23 @@ export async function getPersonalizedCultivationRecommendations(
   return personalizedCultivationRecommendationsFlow(input);
 }
 
+const recommendationPrompt = ai.definePrompt(
+  {
+    name: 'recommendationPrompt',
+    input: { schema: PersonalizedCultivationRecommendationsInputSchema },
+    output: { schema: PersonalizedCultivationRecommendationsOutputSchema },
+    prompt: `Based on the following data for a crop in El Salvador, generate recommendations for soil preparation and seeding.
+
+Input Data:
+- Crop: {{{crop}}}
+- Location: {{{location}}}
+- Planting Date: {{{plantingDate}}}
+- User Type: {{{userType}}}
+`,
+  }
+);
+
+
 const personalizedCultivationRecommendationsFlow = ai.defineFlow(
   {
     name: 'personalizedCultivationRecommendationsFlow',
@@ -39,25 +56,9 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedCultivationRecommendationsOutputSchema,
   },
   async (input) => {
-    const prompt = `Based on the following data for a crop in El Salvador, generate recommendations for soil preparation and seeding.
+    const llmResponse = await recommendationPrompt(input);
+    const output = llmResponse.output;
 
-Input Data:
-- Crop: ${input.crop}
-- Location: ${input.location}
-- Planting Date: ${input.plantingDate}
-- User Type: ${input.userType}
-
-Your response MUST be a valid JSON object that conforms to the output schema. Do not add any text or commentary outside of the JSON structure. Your entire response must ONLY be the JSON object.`;
-
-    const llmResponse = await ai.generate({
-      prompt: prompt,
-      model: 'googleai/gemini-1.5-flash-latest',
-      output: {
-        schema: PersonalizedCultivationRecommendationsOutputSchema,
-      },
-    });
-
-    const output = llmResponse.output();
     if (!output) {
       throw new Error('AI model did not return a valid output.');
     }
