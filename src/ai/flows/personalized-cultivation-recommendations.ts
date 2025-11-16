@@ -35,7 +35,7 @@ export async function getPersonalizedCultivationRecommendations(
 const prompt = ai.definePrompt({
   name: 'personalizedCultivationRecommendationsPrompt',
   input: {schema: PersonalizedCultivationRecommendationsInputSchema},
-  output: {schema: PersonalizedCultivationRecommendationsOutputSchema},
+  output: {schema: PersonalizedCultivationRecommendationsOutputSchema, format: 'json'},
   prompt: `You are an expert agricultural advisor for farmers and gardeners in El Salvador.
   Based on the crop, location, planting date, and user type, provide personalized recommendations for soil preparation and seeding.
 
@@ -52,9 +52,33 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     name: 'personalizedCultivationRecommendationsFlow',
     inputSchema: PersonalizedCultivationRecommendationsInputSchema,
     outputSchema: PersonalizedCultivationRecommendationsOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
+    },
+    async (input) => {
+    let result: PersonalizedCultivationRecommendationsOutput | null = null;
+    let attempts = 0;
+    const maxAttempts = 3;
+
+    while (!result && attempts < maxAttempts) {
+      attempts++;
+      const llmResponse = await prompt(input);
+      const output = llmResponse.output;
+
+      if (output) {
+        const validation = PersonalizedCultivationRecommendationsOutputSchema.safeParse(output);
+        if (validation.success) {
+          result = validation.data;
+        } else {
+          console.warn(`Attempt ${attempts}: AI response validation failed.`, validation.error);
+        }
+      } else {
+         console.warn(`Attempt ${attempts}: AI response was empty.`);
+      }
+    }
+
+    if (!result) {
+      throw new Error('Failed to generate a valid cultivation plan after multiple attempts.');
+    }
+
+    return result;
   }
 );
