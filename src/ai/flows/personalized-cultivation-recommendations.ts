@@ -35,16 +35,19 @@ export async function getPersonalizedCultivationRecommendations(
 const prompt = ai.definePrompt({
   name: 'personalizedCultivationRecommendationsPrompt',
   input: {schema: PersonalizedCultivationRecommendationsInputSchema},
-  output: {schema: PersonalizedCultivationRecommendationsOutputSchema},
+  output: {
+    format: 'json',
+    schema: PersonalizedCultivationRecommendationsOutputSchema
+  },
   prompt: `You are an expert agricultural advisor for farmers and gardeners in El Salvador.
-  Based on the crop, location, planting date, and user type, provide personalized recommendations for soil preparation and seeding.
+  Based on the user's input, provide personalized recommendations for soil preparation and seeding.
 
-  Crop: {{{crop}}}
-  Location: {{{location}}}
-  Planting Date: {{{plantingDate}}}
-  User Type: {{{userType}}}
+  - Crop: {{{crop}}}
+  - Location: {{{location}}}
+  - Planting Date: {{{plantingDate}}}
+  - User Type: {{{userType}}}
 
-  Respond with a valid JSON object that conforms to the output schema.`,
+  You MUST respond with a valid JSON object that strictly conforms to the output schema. Do not add any commentary or text outside of the JSON structure.`,
 });
 
 const personalizedCultivationRecommendationsFlow = ai.defineFlow(
@@ -58,7 +61,7 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     const output = llmResponse.output;
 
     if (!output) {
-      throw new Error('Failed to generate a valid cultivation plan.');
+      throw new Error('Failed to generate a valid cultivation plan. The AI model did not return valid data.');
     }
 
     return output;
