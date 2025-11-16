@@ -35,7 +35,7 @@ export async function getPersonalizedCultivationRecommendations(
 const prompt = ai.definePrompt({
   name: 'personalizedCultivationRecommendationsPrompt',
   input: {schema: PersonalizedCultivationRecommendationsInputSchema},
-  output: {schema: PersonalizedCultivationRecommendationsOutputSchema, format: 'json'},
+  output: {schema: PersonalizedCultivationRecommendationsOutputSchema},
   prompt: `You are an expert agricultural advisor for farmers and gardeners in El Salvador.
   Based on the crop, location, planting date, and user type, provide personalized recommendations for soil preparation and seeding.
 
