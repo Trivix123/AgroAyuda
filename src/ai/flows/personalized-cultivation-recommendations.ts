@@ -57,37 +57,34 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
   },
   async (input) => {
     const llmResponse = await prompt(input);
-    const textResponse = llmResponse.text;
-
-    if (!textResponse) {
-      throw new Error('AI model returned an empty response.');
-    }
-
-    // Find the JSON block within the response text.
-    // This regex handles both markdown code blocks and plain JSON objects.
+    
+    // The model can sometimes return a non-JSON string.
+    // This is a workaround to extract the JSON from the string.
+    const textResponse = llmResponse.text || '';
     const jsonMatch = textResponse.match(/```json\n([\s\S]*?)\n```|({[\s\S]*})/);
-    if (!jsonMatch) {
-      console.error('Failed to find JSON in the AI response:', textResponse);
-      throw new Error('Failed to find JSON in the AI response.');
-    }
 
+    if (!jsonMatch) {
+      console.error("Failed to find JSON in the AI response:", textResponse);
+      throw new Error("Failed to find JSON in the AI response.");
+    }
+    
     // Extract the JSON string from the first capturing group that matched.
     const jsonString = jsonMatch[1] || jsonMatch[2];
-
+    
     try {
       const parsedJson = JSON.parse(jsonString);
       // Validate the parsed JSON against the Zod schema.
       const validationResult = PersonalizedCultivationRecommendationsOutputSchema.safeParse(parsedJson);
-
+      
       if (!validationResult.success) {
-        console.error('JSON validation failed:', validationResult.error.flatten());
-        throw new Error('AI response does not match the required data structure.');
+        console.error("JSON validation failed:", validationResult.error.flatten());
+        throw new Error("AI response does not match the required data structure.");
       }
       
       return validationResult.data;
     } catch (e) {
-      console.error('Failed to parse JSON from AI response:', e);
-      throw new Error('The AI response was not valid JSON.');
+      console.error("Failed to parse JSON from AI response:", e);
+      throw new Error("The AI response was not valid JSON.");
     }
   }
 );
