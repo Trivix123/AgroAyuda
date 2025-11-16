@@ -36,7 +36,6 @@ const prompt = ai.definePrompt({
   name: 'personalizedCultivationRecommendationsPrompt',
   input: {schema: PersonalizedCultivationRecommendationsInputSchema},
   output: {
-    format: 'json',
     schema: PersonalizedCultivationRecommendationsOutputSchema,
   },
   prompt: `You are an expert agricultural advisor for farmers and gardeners in El Salvador.
@@ -47,7 +46,7 @@ const prompt = ai.definePrompt({
   - Planting Date: {{{plantingDate}}}
   - User Type: {{{userType}}}
 
-  You MUST respond with a valid JSON object that strictly conforms to the output schema. Do not add any commentary or text outside of the JSON structure.`,
+  You MUST respond with a valid JSON object that strictly conforms to the output schema. Do not add any commentary or text outside of the JSON structure. Your entire response must be ONLY the JSON object.`,
 });
 
 const personalizedCultivationRecommendationsFlow = ai.defineFlow(
@@ -58,12 +57,35 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
   },
   async (input) => {
     const llmResponse = await prompt(input);
-    const output = llmResponse.output;
+    const textResponse = llmResponse.text;
 
-    if (!output) {
-      throw new Error('Failed to generate a valid cultivation plan. The AI model did not return valid data.');
+    if (!textResponse) {
+      throw new Error('AI model returned an empty response.');
     }
 
-    return output;
+    // Find the JSON block within the response text.
+    const jsonMatch = textResponse.match(/```json\n([\s\S]*?)\n```|({[\s\S]*})/);
+    if (!jsonMatch) {
+      throw new Error('Failed to find JSON in the AI response.');
+    }
+
+    // Extract the JSON string from the first capturing group that matched.
+    const jsonString = jsonMatch[1] || jsonMatch[2];
+
+    try {
+      const parsedJson = JSON.parse(jsonString);
+      // Validate the parsed JSON against the Zod schema.
+      const validationResult = PersonalizedCultivationRecommendationsOutputSchema.safeParse(parsedJson);
+
+      if (!validationResult.success) {
+        console.error('JSON validation failed:', validationResult.error.flatten());
+        throw new Error('AI response does not match the required data structure.');
+      }
+      
+      return validationResult.data;
+    } catch (e) {
+      console.error('Failed to parse JSON from AI response:', e);
+      throw new Error('The AI response was not valid JSON.');
+    }
   }
 );
