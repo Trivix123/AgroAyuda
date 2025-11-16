@@ -52,8 +52,8 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     name: 'personalizedCultivationRecommendationsFlow',
     inputSchema: PersonalizedCultivationRecommendationsInputSchema,
     outputSchema: PersonalizedCultivationRecommendationsOutputSchema,
-    },
-    async (input) => {
+  },
+  async (input) => {
     let result: PersonalizedCultivationRecommendationsOutput | null = null;
     let attempts = 0;
     const maxAttempts = 3;
