@@ -64,8 +64,10 @@ const personalizedCultivationRecommendationsFlow = ai.defineFlow(
     }
 
     // Find the JSON block within the response text.
+    // This regex handles both markdown code blocks and plain JSON objects.
     const jsonMatch = textResponse.match(/```json\n([\s\S]*?)\n```|({[\s\S]*})/);
     if (!jsonMatch) {
+      console.error('Failed to find JSON in the AI response:', textResponse);
       throw new Error('Failed to find JSON in the AI response.');
     }
 
